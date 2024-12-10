@@ -37,23 +37,34 @@ class GameLogic {
         }
     }
 
-    public String getDisplayWord() {
+    public synchronized String getDisplayWord() {
         return displayWord.toString();
     }
 
-    public int getRemainingAttempts() {
+    public synchronized int getRemainingAttempts() {
         return maxAttempts - incorrectGuesses.size();
     }
 
-    public boolean isGameOver() {
+    public synchronized boolean isGameOver() {
         return incorrectGuesses.size() >= maxAttempts || displayWord.toString().equals(secretWord);
     }
 
-    public boolean isWin() {
+    public synchronized boolean isWin() {
         return displayWord.toString().equals(secretWord);
     }
 
-    public String getSecretWord() {
+    public synchronized String getSecretWord() {
         return secretWord;
     }
+
+    /*
+     * Usiamo synchronized perchè dato che nel gioco ci saranno più thread
+     * che accedono a delle parti cruciali del codice, in questo caso la
+     * logica del gioco.
+     * 
+     * I metodi marcati synchronized potranno essere usati da un solo thread
+     * per volta, in questo modo si può evitare collisioni tra thread che
+     * vogliono accedere allo stesso blocco di codice.
+     * 
+     */
 }
