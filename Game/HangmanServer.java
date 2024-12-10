@@ -29,4 +29,14 @@ class HangmanServer {
             e.printStackTrace();
         }
     }
+
+    public synchronized void broadcast(String message) {
+        for (ClientHandler client : clients) {
+            client.sendMessage(message);
+        }
+    }
+
+    public GameLogic getGameLogic() {
+        return gameLogic;
+    }
 }

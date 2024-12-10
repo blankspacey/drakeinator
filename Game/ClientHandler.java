@@ -17,5 +17,16 @@ class ClientHandler implements Runnable {
 
     @Override
     public void run() {
+       
+    }
+
+    public void sendMessage(String message) {
+        out.println(message);
+    }
+
+    private void sendGameState() {
+        GameLogic gameLogic = server.getGameLogic();
+        sendMessage("Current word: " + gameLogic.getDisplayWord());
+        sendMessage("Remaining attempts: " + gameLogic.getRemainingAttempts());
     }
 }
