@@ -15,9 +15,9 @@ public class HangmanClient {
 
     public void start() {
         try (Socket socket = new Socket(host, port);
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-             BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in))) {
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in))) {
 
             Thread listenerThread = new ClientListener(in);
             listenerThread.start();
@@ -29,5 +29,10 @@ public class HangmanClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        HangmanClient client = new HangmanClient("localhost", 12345);
+        client.start();
     }
 }
