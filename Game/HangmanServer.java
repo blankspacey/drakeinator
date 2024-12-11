@@ -30,9 +30,9 @@ class HangmanServer {
         }
     }
 
-    public synchronized void broadcast(String message) {
+    public synchronized void broadcast(String message, String sender) {
         for (ClientHandler client : clients) {
-            client.sendMessage(message);
+            client.sendMessage(sender + ": " + message);
         }
     }
 
