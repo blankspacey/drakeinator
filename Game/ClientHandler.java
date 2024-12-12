@@ -41,12 +41,11 @@ class ClientHandler implements Runnable {
                     boolean correct = server.getGameLogic().makeGuess(guess);
 
                     if (correct) {
-                        server.broadcast(username + " guessed right the letter " + Character.toUpperCase(guess) + "!", "SERVER");
+                        server.broadcast(username + " guessed right --> " + Character.toUpperCase(guess) + "!", "SERVER");
                     } else {
-                        server.broadcast(username + " guessed wrong the letter " + Character.toUpperCase(guess) + "!", "SERVER");
+                        server.broadcast(username + " guessed wrong --> " + Character.toUpperCase(guess) + "!", "SERVER");
                     }
-                }
-                else {
+                } else {
                     server.broadcast(input, username);
                 }
                 broadcastGameState();

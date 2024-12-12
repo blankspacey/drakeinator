@@ -45,6 +45,10 @@ class GameLogic {
         return maxAttempts - incorrectGuesses.size();
     }
 
+    public synchronized int getMaxAttempts() {
+        return maxAttempts;
+    }
+
     public synchronized boolean isGameOver() {
         return incorrectGuesses.size() >= maxAttempts || displayWord.toString().equals(secretWord);
     }
