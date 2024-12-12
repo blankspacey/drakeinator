@@ -34,9 +34,10 @@ class ClientHandler implements Runnable {
             while (!server.getGameLogic().isGameOver()) {
                 sendGameState();
                 String input = in.readLine();
+                String prefix = "/";
 
-                if (input != null && input.length() == 1) {
-                    char guess = input.charAt(0);
+                if (input != null && input.length() == 2 && input.startsWith(prefix)) {
+                    char guess = input.charAt(1);
                     boolean correct = server.getGameLogic().makeGuess(guess);
 
                     if (correct) {
@@ -44,6 +45,9 @@ class ClientHandler implements Runnable {
                     } else {
                         server.broadcast("Incorrect guess: " + guess, username);
                     }
+                }
+                else {
+                    server.broadcast(input, username);
                 }
             }
 
