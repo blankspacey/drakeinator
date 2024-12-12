@@ -25,11 +25,11 @@ class ClientHandler implements Runnable {
             out.println("Enter your username:");
             username = in.readLine();
             if (username == null || username.isEmpty()) {
-                username = "Player" + socket.getPort(); // Fallback to a default name
+                username = "Player" + socket.getPort();
             }
 
             out.println("Welcome to Hangman, " + username + "!");
-            server.broadcast(username + " has joined the game.", "Server");
+            server.broadcast(username + " has joined the game.", "SERVER");
 
             while (!server.getGameLogic().isGameOver()) {
                 sendGameState();
@@ -41,21 +41,22 @@ class ClientHandler implements Runnable {
                     boolean correct = server.getGameLogic().makeGuess(guess);
 
                     if (correct) {
-                        server.broadcast("Correct guess: " + guess, username);
+                        server.broadcast(username + " guessed right the letter " + Character.toUpperCase(guess) + "!", "SERVER");
                     } else {
-                        server.broadcast("Incorrect guess: " + guess, username);
+                        server.broadcast(username + " guessed wrong the letter " + Character.toUpperCase(guess) + "!", "SERVER");
                     }
                 }
                 else {
                     server.broadcast(input, username);
                 }
+                broadcastGameState();
             }
 
             sendGameState();
             if (server.getGameLogic().isWin()) {
-                server.broadcast("Game over! The word was: " + server.getGameLogic().getSecretWord() + ". Players win!", "Server");
+                server.broadcast("Game over! The word was: " + server.getGameLogic().getSecretWord() + ". Players win!", "SERVER");
             } else {
-                server.broadcast("Game over! The word was: " + server.getGameLogic().getSecretWord() + ". You lost.", "Server");
+                server.broadcast("Game over! The word was: " + server.getGameLogic().getSecretWord() + ". You lost.", "SERVER");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -76,5 +77,11 @@ class ClientHandler implements Runnable {
         GameLogic gameLogic = server.getGameLogic();
         sendMessage("Current word: " + gameLogic.getDisplayWord());
         sendMessage("Remaining attempts: " + gameLogic.getRemainingAttempts());
+    }
+
+    private void broadcastGameState() {
+        GameLogic gameLogic = server.getGameLogic();
+        server.broadcastSystem("Current word: " + gameLogic.getDisplayWord());
+        server.broadcastSystem("Remaining attempts: " + gameLogic.getRemainingAttempts());
     }
 }

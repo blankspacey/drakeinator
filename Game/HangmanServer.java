@@ -36,6 +36,12 @@ class HangmanServer {
         }
     }
 
+    public synchronized void broadcastSystem(String message) {
+        for (ClientHandler client : clients) {
+            client.sendMessage(message);
+        }
+    }
+
     public GameLogic getGameLogic() {
         return gameLogic;
     }
