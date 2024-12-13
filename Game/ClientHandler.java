@@ -46,7 +46,7 @@ class ClientHandler implements Runnable {
                         server.broadcast(username + " guessed wrong --> " + Character.toUpperCase(guess) + "!", "SERVER");
                     }
                 } else {
-                    server.broadcast(input, username);
+                    if (input != null) server.broadcast(input, username);
                 }
                 broadcastGameState();
             }
